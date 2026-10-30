@@ -9,18 +9,18 @@ RUN npm ci
 
 COPY . .
 
-RUN npx ng build Frontend-Proyecto --configuration production
+RUN npx ng build proyecto2026 --configuration production
 
 # ---------- STAGE 2: Runtime ----------
 FROM nginx:1.27-alpine AS runtime
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=build /app/dist/Frontend-Proyecto/browser /usr/share/nginx/html
+COPY --from=build /app/dist/proyecto2026/browser /usr/share/nginx/html
 
 EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=3s \
-  CMD wget -q --spider http://localhost/ || exit 1
+    CMD wget -q --spider http://localhost/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
